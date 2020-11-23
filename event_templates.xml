@@ -1,0 +1,56 @@
+<odoo>
+    <data>
+        <template id="registration_attendee_details_inherit" inherit_id="website_event.registration_attendee_details" >
+          <xpath expr="//div[hasclass('col-lg')][last()]"  position="replace">
+              <div class="col-lg my-2">
+                  <label>Phone</label>
+                  <input class="form-control" type="tel" t-attf-name="#{counter}-phone" required="This field is required"/>
+              </div>
+          </xpath>
+          <xpath expr="//div[hasclass('col-lg')][last()]"  position="after">
+              <div class="col-lg my-2">
+                  <label>Job Position</label>
+                  <input class="form-control" type="text" t-attf-name="#{counter}-job_position"/>
+              </div>
+              <div class="col-lg my-2">
+                  <label>Address</label>
+                  <input class="form-control" type="text" t-attf-name="#{counter}-address"/>
+                  <!-- <textarea class="form-control" t-attf-name="#{counter}-address"></textarea> -->
+              </div>
+          </xpath>
+        </template>
+
+        <template id="event_description_inherit" inherit_id="website_event.event_description_full">
+          <xpath expr="//div[hasclass('container')]//div[hasclass('row')]//div[hasclass('rounded-right')]//div[hasclass('o_wevent_sidebar_block')]"  position="attributes">
+            <attribute name="t-if">not event.has_no_time_limit</attribute>
+          </xpath>
+        </template>
+
+        <template id="registration_template_inherit" inherit_id="website_event.registration_template">
+          <xpath expr="//form[@t-if='buy']//div[@id='o_wevent_tickets']//t[@t-id='tickets']//t[@t-if='event.date_begin']"  position="attributes">
+            <attribute name="t-if">event.date_begin and not event.has_no_time_limit</attribute>
+          </xpath>
+        </template>
+
+        <template id="events_list_inherit" inherit_id="website_event.events_list">
+          <xpath expr="//div[@t-foreach='event_ids']//div[hasclass('row')]//div//main//time[@itemprop='startDate']"  position="attributes">
+            <attribute name="t-if">not event.has_no_time_limit</attribute>
+          </xpath>
+          <xpath expr="//div[@t-foreach='event_ids']//div[hasclass('row')]//header//a//t//div[hasclass('o_wevent_event_date')]"  position="attributes">
+            <attribute name="t-if">not event.has_no_time_limit</attribute>
+          </xpath>
+        </template>
+
+        <template id="registration_complete_inherit" inherit_id="website_event.registration_complete">
+          <xpath expr="//div[hasclass('container')]//div[hasclass('row')]//div[hasclass('col-lg-8')]//p"  position="attributes">
+            <attribute name="t-if">not event.has_no_time_limit</attribute>
+          </xpath>
+        </template>
+
+        <template id="country_events_list_inherit" inherit_id="website_event.country_events_list">
+          <xpath expr="//div[hasclass('country_events_list')]//t[@t-if='events']//ul//li/span"  position="attributes">
+            <attribute name="t-if">not event_dict['event'].has_no_time_limit</attribute>
+          </xpath>
+        </template>
+    </data>
+</odoo>
